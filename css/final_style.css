@@ -1,5 +1,14 @@
 .rectangle {
-width:1536px;
-height:100px;
-background-color: gold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:1536px;
+    height:100px;
+    background-color: gold;
+    z-index: 999;
+    overflow: hidden;
+}
+
+body{
+    padding:100px;
 }
