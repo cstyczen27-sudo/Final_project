@@ -8,6 +8,14 @@
     z-index: 999;
     display: flex;
     overflow: hidden;
+    padding-inline:10px;
+}
+
+#barbtn{
+    margin-top:15px;
+    margin-left: auto;
+    width:80px;
+    height:40px; 
 }
 .pagebtn {
     position: fixed;
@@ -26,5 +34,7 @@
   border-radius: 0px;
 }
 body{
-    padding:100px;
+    padding-top:150px;
+    padding-left:20px;
+    padding-right:20px;
 }
