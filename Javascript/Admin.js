@@ -1,0 +1,1 @@
+console.log("The Js file is connected")
