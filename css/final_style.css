@@ -10,7 +10,25 @@
     overflow: hidden;
     padding-inline:10px;
 }
-
+#createBtn{
+    display: none;
+}
+#Eventcreate {
+    display: none;
+}
+#EventTitle{
+    width:50%;
+}
+#location{
+    width:30%;
+}
+#category{
+    width:20%;
+}
+#description{
+    width:50%;
+    height:70%;
+}
 #barbtn{
     margin-top:15px;
     margin-left: auto;

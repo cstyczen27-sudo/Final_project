@@ -21,34 +21,42 @@
             <p>wait there was nothing here</p>
             <br><br>
         </div>
-        <div id="Eventcreate" class="card">
-            <div  class="card-body">
-                <form id="EventForm">
-                    <input type="text" id="EventTitle" class="form-control" placeholder="Title of Event"><br>
-                    <input type="text" id="Location" class="form-control" placeholder="Location Address"><br>
-                    <select id="category" class="form-control">
-                        <option value="">Pick a type of Event</option>
-                        <option value="Frat">Fraternity</option>
-                        <option value="soror">Sorority</option>
-                        <option value="Club">Club</option>
-                        <option value="Sport">Sports Team</option>
-                        <option value="school">Academic</option>
-                        <option value="Social">Social</option>
-                        <option value="other">Other</option>
-                    </select><br>
-                    <textarea id="description" class="form-control" placeholder="Description of event"></textarea><br>
-                    <label for="Eventdate">When is the Event</label><br><input type="date" id="Eventdate">
-                    <input type="time" id="Eventtime"><br>
-                    <input type="radio" name="eventState" id="indoor" value="indoor">
-                    <label for="indoor">Indoor</label>
 
-                    <input type="radio" name="eventState" id="outdoor" value="outdoor">
-                    <label for="outdoor">Outdoor</label>
-                    <br>
-                    <button id="submit-btn">Submit</button>
-                </form>
+        <div class="row justify-content-center">
+            <div  class="col-10">
+                <button id="createBtn">+ Create Event</button>
+                <div id="Eventcreate" class="card">
+                    <div class="card-body p-4">
+                        <form id="EventForm">
+                            <input type="text" id="EventTitle" class="form-control" placeholder="Title of Event"><br>
+                            <input type="text" id="location" class="form-control" placeholder="Location Address"><br>
+                            <select id="category" class="form-control">
+                                <option value="">Pick a type of Event</option>
+                                <option value="Frat">Fraternity</option>
+                                <option value="soror">Sorority</option>
+                                <option value="Club">Club</option>
+                                <option value="Sport">Sports Team</option>
+                                <option value="school">Academic</option>
+                                <option value="Social">Social</option>
+                                <option value="other">Other</option>
+                            </select><br>
+                            <textarea id="description" class="form-control" placeholder="Description of event"></textarea><br>
+                            <label for="Eventdate">When is the Event</label><br><input type="date" id="Eventdate">
+                            <input type="time" id="Eventtime"><br>
+                            <input type="radio" name="eventState" id="indoor" value="indoor">
+                            <label for="indoor">Indoor</label>
+
+                            <input type="radio" name="eventState" id="outdoor" value="outdoor">
+                            <label for="outdoor">Outdoor</label>
+                            <br>
+                            <button id="submit-btn">Submit</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        <div id="eventsList">
 
 
 
@@ -58,13 +66,7 @@
 
 
 
-
-
-
-
-
-
-
+        </div>
         <script src="Javascript/Admin.js"></script>
     </body>
 </html>
