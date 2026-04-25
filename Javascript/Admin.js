@@ -10,6 +10,8 @@ document.getElementById("barbtn").addEventListener("click", function toggleAdmin
         document.getElementById("createBtn").style.display = "block";
     } else {
         document.getElementById("createBtn").style.display = "none";
+        document.getElementById("Eventcreate").style.display = "none";
+        formOpen = false
     } 
 });
 
@@ -24,6 +26,28 @@ document.getElementById("createBtn").addEventListener("click", function eventCre
     
     console.log();
 });
+function renderEvents() {
+    let storedEvents = JSON.parse(localStorage.getItem("events"));
+    let eventsList = document.getElementById("eventsList");
+    eventsList.innerHTML = "";
+    storedEvents.forEach(function(event, index) {
+        eventsList.innerHTML += `
+           <div class="card">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>${event.title}</h5>
+                        <p>${event.date} at ${event.time}</p>
+                        <p>${event.Location}</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-dark" onclick="editEvent(${index})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteEvent(${index})">Delete</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
 
 document.getElementById("submit-btn").addEventListener("click", function eventCreation(event)
    {event.preventDefault(); 
@@ -38,4 +62,16 @@ document.getElementById("submit-btn").addEventListener("click", function eventCr
     let NewEvent = {title, Location, eventType, info, date, time, eventState};
     events.push(NewEvent);
     localStorage.setItem("events", JSON.stringify(events));
+    renderEvents()
 });
+
+function deleteEvent(index) {
+    events = JSON.parse(localStorage.getItem("events"));
+    events.splice(index, 1);
+    localStorage.setItem("events",JSON.stringify(events))
+    renderEvents();
+}
+
+function editEvent(index){
+    events = JSON.parse(localStorage.getItem("events"));
+}
