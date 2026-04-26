@@ -1,4 +1,4 @@
-console.log("The Js file is connected")
+console.log("The Admin file is connected")
 
 let adminMode = false;
 let formOpen = false;
@@ -17,8 +17,8 @@ document.getElementById("barbtn").addEventListener("click", function toggleAdmin
     } 
     renderEvents()
 });
-
-document.getElementById("createBtn").addEventListener("click", function eventCreationBtn()
+if (document.getElementById("createBtn")) {
+    document.getElementById("createBtn").addEventListener("click", function eventCreationBtn()
 {if (formOpen == false){
     document.getElementById("Eventcreate").style.display = "block";
     formOpen = !formOpen
@@ -28,7 +28,8 @@ document.getElementById("createBtn").addEventListener("click", function eventCre
 }
     
     console.log();
-});
+})};
+
 function renderEvents(filter = "") {
     let storedEvents;
     Savedevents = JSON.parse(localStorage.getItem("Savedevents")) || [];
@@ -61,10 +62,8 @@ function renderEvents(filter = "") {
                  </div>`;
     }});
 };
-
-document.getElementById("submit-btn").addEventListener("click", function eventCreation(event)
-   {event.preventDefault(); 
-    console.log("submit clicked");
+if (document.getElementById("submit-btn")) {
+    document.getElementById("submit-btn").addEventListener("click", function eventCreation(event){
     events = JSON.parse(localStorage.getItem("events")) || [];
     let title = document.getElementById("EventTitle").value;
     let Location = document.getElementById("location").value;
@@ -83,6 +82,7 @@ document.getElementById("submit-btn").addEventListener("click", function eventCr
     localStorage.setItem("events", JSON.stringify(events));
     renderEvents()
 });
+}
 
 function deleteEvent(index) {
     events = JSON.parse(localStorage.getItem("events")) || [];
@@ -117,11 +117,13 @@ function saveEvent(index) {
     renderEvents();
 }
 
-document.getElementById("filter").addEventListener("change", function() {
+if (document.getElementById("filter")) {
+    document.getElementById("filter").addEventListener("click", function(){
     let filterValue = this.value;
     console.log(filterValue)
     renderEvents(filterValue);
 });
+}
 
 function unsaveEvent(index) {
     Savedevents = JSON.parse(localStorage.getItem("Savedevents")) || [];
@@ -132,4 +134,6 @@ function unsaveEvent(index) {
     renderEvents();
 }
 
-renderEvents()
+if (document.getElementById("eventsList")) {
+    renderEvents();
+}
