@@ -41,6 +41,8 @@ function renderEvents(filter = "") {
     let eventsList = document.getElementById("eventsList");
     eventsList.innerHTML = "";
     storedEvents.forEach(function(event, index) { 
+        let formattedDate = new Date(event.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: 'numeric'});
+        let formattedTime = new Date(`2000-01-01T${event.time}`).toLocaleTimeString('en-US', {hour: 'numeric', minute: '2-digit', hour12: true});
         let isSaved = Savedevents.some(e => e.title === event.title);
          if (filter === "" || filter === "Savedevents" || event.eventType === filter) {
             eventsList.innerHTML += `
@@ -48,7 +50,7 @@ function renderEvents(filter = "") {
                     <div class="card-body d-flex justify-content-between align-items-center">
                         <div>
                             <h5>${event.title}</h5>
-                            <p>${event.date} at ${event.time}</p>
+                            <p>${formattedDate} at ${formattedTime}</p>
                             <p>${event.Location}</p>
                             <p>${event.eventType}</p>
                         </div>
