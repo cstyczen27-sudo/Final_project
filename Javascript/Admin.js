@@ -3,6 +3,8 @@ console.log("The Js file is connected")
 let adminMode = false;
 let formOpen = false;
 let events = [];
+let editIndex = -1;
+let Savedevents = [];
 
 document.getElementById("barbtn").addEventListener("click", function toggleAdmin() 
     {adminMode = !adminMode;
@@ -13,6 +15,7 @@ document.getElementById("barbtn").addEventListener("click", function toggleAdmin
         document.getElementById("Eventcreate").style.display = "none";
         formOpen = false
     } 
+    renderEvents()
 });
 
 document.getElementById("createBtn").addEventListener("click", function eventCreationBtn()
@@ -26,11 +29,17 @@ document.getElementById("createBtn").addEventListener("click", function eventCre
     
     console.log();
 });
-function renderEvents() {
-    let storedEvents = JSON.parse(localStorage.getItem("events"));
+function renderEvents(filter = "") {
+    let storedEvents;
+    if (filter === "Savedevents") {
+        storedEvents = JSON.parse(localStorage.getItem("Savedevents")) || [];
+    } else {
+        storedEvents = JSON.parse(localStorage.getItem("events")) || [];
+    }
     let eventsList = document.getElementById("eventsList");
     eventsList.innerHTML = "";
     storedEvents.forEach(function(event, index) {
+         if (filter === "" || filter === "Savedevents" || event.eventType === filter) {
         eventsList.innerHTML += `
            <div class="card">
                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -38,20 +47,22 @@ function renderEvents() {
                         <h5>${event.title}</h5>
                         <p>${event.date} at ${event.time}</p>
                         <p>${event.Location}</p>
+                        <p>${event.eventType}</p>
                     </div>
                     <div>
-                        <button class="btn btn-dark" onclick="editEvent(${index})">Edit</button>
+                       ${adminMode ? `<button class="btn btn-dark" onclick="editEvent(${index})">Edit</button>
                         <button class="btn btn-danger" onclick="deleteEvent(${index})">Delete</button>
+                        ` : ` <button class="btn btn-warning" onclick="saveEvent(${index})">Save</button>`}
                     </div>
                 </div>
-            </div>
-        `;
-    });
-}
+            </div>`;
+    }});
+};
 
 document.getElementById("submit-btn").addEventListener("click", function eventCreation(event)
    {event.preventDefault(); 
     console.log("submit clicked");
+    events = JSON.parse(localStorage.getItem("events")) || [];
     let title = document.getElementById("EventTitle").value;
     let Location = document.getElementById("location").value;
     let eventType = document.getElementById("category").value;
@@ -60,13 +71,18 @@ document.getElementById("submit-btn").addEventListener("click", function eventCr
     let time = document.getElementById("Eventtime").value;
     let eventState = document.querySelector('input[name="eventState"]:checked').value;
     let NewEvent = {title, Location, eventType, info, date, time, eventState};
+    if (editIndex === -1) {
     events.push(NewEvent);
+    } else {
+    events[editIndex] = NewEvent;
+    editIndex = -1;
+    }
     localStorage.setItem("events", JSON.stringify(events));
     renderEvents()
 });
 
 function deleteEvent(index) {
-    events = JSON.parse(localStorage.getItem("events"));
+    events = JSON.parse(localStorage.getItem("events")) || [];
     events.splice(index, 1);
     localStorage.setItem("events",JSON.stringify(events))
     renderEvents();
@@ -74,4 +90,34 @@ function deleteEvent(index) {
 
 function editEvent(index){
     events = JSON.parse(localStorage.getItem("events"));
+    let eventToEdit = events[index];
+    
+    document.getElementById("EventTitle").value = eventToEdit.title;
+    document.getElementById("location").value = eventToEdit.Location;
+    document.getElementById("category").value = eventToEdit.eventType;
+    document.getElementById("description").value = eventToEdit.info;
+    document.getElementById("Eventdate").value = eventToEdit.date;
+    document.getElementById("Eventtime").value = eventToEdit.time;
+    document.getElementById("Eventcreate").style.display = "block";
+    editIndex = index;
+    formOpen = true;
 }
+function saveEvent(index) {
+    Savedevents = JSON.parse(localStorage.getItem("Savedevents")) || [];
+    events = JSON.parse(localStorage.getItem("events")) || [];
+    let eventToSave = events[index];
+    let alreadySaved = Savedevents.some(e => e.title === eventToSave.title);
+    if (!alreadySaved) {
+    Savedevents.push(eventToSave);
+    }
+    localStorage.setItem("Savedevents", JSON.stringify(Savedevents));
+    renderEvents();
+}
+
+document.getElementById("filter").addEventListener("change", function() {
+    let filterValue = this.value;
+    console.log(filterValue)
+    renderEvents(filterValue);
+});
+
+renderEvents()

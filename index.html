@@ -24,7 +24,20 @@
 
         <div class="row justify-content-center">
             <div  class="col-10">
-                <button id="createBtn">+ Create Event</button>
+                <div class="d-flex gap-2 align-items-center">
+                    <button id="createBtn">+ Create Event</button>
+
+                    <select id="filter" class="form-control" style="width: 150px;">
+                        <option value="">Filter</option>
+                            <option value="Fraternity">Fraternity</option>
+                            <option value="Sorority">Sorority</option>
+                            <option value="Club">Club</option>
+                            <option value="Sport Team">Sports Team</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Social">Social</option>
+                            <option value="Savedevents">Saved</option>
+                    </select>
+                </div>
                 <div id="Eventcreate" class="card">
                     <div class="card-body p-4">
                         <form id="EventForm">
@@ -32,13 +45,13 @@
                             <input type="text" id="location" class="form-control" placeholder="Location Address"><br>
                             <select id="category" class="form-control">
                                 <option value="">Pick a type of Event</option>
-                                <option value="Frat">Fraternity</option>
-                                <option value="soror">Sorority</option>
+                                <option value="Fraternity">Fraternity</option>
+                                <option value="Sorority">Sorority</option>
                                 <option value="Club">Club</option>
-                                <option value="Sport">Sports Team</option>
-                                <option value="school">Academic</option>
+                                <option value="Sport Team">Sports Team</option>
+                                <option value="Academic">Academic</option>
                                 <option value="Social">Social</option>
-                                <option value="other">Other</option>
+                                <option value="Other">Other</option>
                             </select><br>
                             <textarea id="description" class="form-control" placeholder="Description of event"></textarea><br>
                             <label for="Eventdate">When is the Event</label><br><input type="date" id="Eventdate">
