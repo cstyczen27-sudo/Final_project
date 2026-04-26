@@ -31,6 +31,7 @@ document.getElementById("createBtn").addEventListener("click", function eventCre
 });
 function renderEvents(filter = "") {
     let storedEvents;
+    Savedevents = JSON.parse(localStorage.getItem("Savedevents")) || [];
     if (filter === "Savedevents") {
         storedEvents = JSON.parse(localStorage.getItem("Savedevents")) || [];
     } else {
@@ -38,24 +39,26 @@ function renderEvents(filter = "") {
     }
     let eventsList = document.getElementById("eventsList");
     eventsList.innerHTML = "";
-    storedEvents.forEach(function(event, index) {
+    storedEvents.forEach(function(event, index) { 
+        let isSaved = Savedevents.some(e => e.title === event.title);
          if (filter === "" || filter === "Savedevents" || event.eventType === filter) {
-        eventsList.innerHTML += `
-           <div class="card">
-                <div class="card-body d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>${event.title}</h5>
-                        <p>${event.date} at ${event.time}</p>
-                        <p>${event.Location}</p>
-                        <p>${event.eventType}</p>
+            eventsList.innerHTML += `
+                <div class="card">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5>${event.title}</h5>
+                            <p>${event.date} at ${event.time}</p>
+                            <p>${event.Location}</p>
+                            <p>${event.eventType}</p>
+                        </div>
+                        <div>
+                        ${adminMode ? `<button class="btn btn-dark" onclick="editEvent(${index})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteEvent(${index})">Delete</button>` 
+                        : `${isSaved ? `<button class="btn btn-dark" onclick="unsaveEvent(${index})">Saved ✓</button>` 
+                        : `<button class="btn btn-warning" onclick="saveEvent(${index})">Save</button>`}`}
+                        </div>
                     </div>
-                    <div>
-                       ${adminMode ? `<button class="btn btn-dark" onclick="editEvent(${index})">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteEvent(${index})">Delete</button>
-                        ` : ` <button class="btn btn-warning" onclick="saveEvent(${index})">Save</button>`}
-                    </div>
-                </div>
-            </div>`;
+                 </div>`;
     }});
 };
 
@@ -119,5 +122,14 @@ document.getElementById("filter").addEventListener("change", function() {
     console.log(filterValue)
     renderEvents(filterValue);
 });
+
+function unsaveEvent(index) {
+    Savedevents = JSON.parse(localStorage.getItem("Savedevents")) || [];
+    events = JSON.parse(localStorage.getItem("events")) || [];
+    let eventToUnsave = events[index];
+    Savedevents = Savedevents.filter(e => e.title !== eventToUnsave.title);
+    localStorage.setItem("Savedevents", JSON.stringify(Savedevents));
+    renderEvents();
+}
 
 renderEvents()
